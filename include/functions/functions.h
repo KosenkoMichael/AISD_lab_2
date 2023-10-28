@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <random>
+#include <exception>
 
 using namespace std;
 
@@ -23,9 +24,10 @@ namespace list {
 		size_t count;
 	public:
 		DoublyLinkedList();
-		DoublyLinkedList(const DoublyLinkedList& other);
 		DoublyLinkedList(size_t value, size_t len_from, size_t len_to);
 		~DoublyLinkedList();
+		DoublyLinkedList(const DoublyLinkedList& other);
+		void swap(DoublyLinkedList& other);
 		DoublyLinkedList& operator=(const DoublyLinkedList& other);
 		void push_tail(const string& data);
 		void push_tail(const DoublyLinkedList& other);
@@ -34,9 +36,10 @@ namespace list {
 		void pop_head();
 		void pop_tail();
 		void delete_node(const string& data);
-		Node& operator[](size_t index);
+		string operator[](size_t index);
 		void print();
-		size_t get_count();
-		void boom();
+		void print_as_file();
+		size_t size();
+		void del_list();
 	};
 }

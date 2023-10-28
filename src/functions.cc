@@ -46,6 +46,41 @@ void DoublyLinkedList::push_tail(const string& data) {
 		count++;
 	}
 }
+void DoublyLinkedList::push_tail(const DoublyLinkedList& other) {
+		Node* temp = other.head;
+		while (temp) {
+			push_tail(temp->_data);
+			temp = temp->_next;
+		}
+}
+void DoublyLinkedList::push_head(const string& data) {
+	if (count == 0) {
+		head->_data = data;
+		count++;
+	}
+	else if (count == 1) {
+		tail->_data = head->_data;
+		head->_data = data;
+		count++;
+	}
+	else if (count > 1) {
+		Node* temp = new Node;
+		temp->_data = data;
+		temp->_next = head;
+		head->_prev = temp;
+		head = temp;
+		count++;
+	}
+}
+void DoublyLinkedList::push_head(const DoublyLinkedList& other) {
+	DoublyLinkedList copy(other);
+	Node* temp = head;
+	while (temp) {
+		copy.push_tail(temp->_data);
+		temp = temp->_next;
+	}
+	swap(copy);
+}
 DoublyLinkedList::DoublyLinkedList(const DoublyLinkedList& other) {
 	head = new Node;
 	tail = new Node;
@@ -58,6 +93,16 @@ DoublyLinkedList::DoublyLinkedList(const DoublyLinkedList& other) {
 		temp = temp->_next;
 	}
 }
+void DoublyLinkedList::swap(DoublyLinkedList& other) {
+	std::swap(head, other.head);
+	std::swap(tail, other.tail);
+	std::swap(count, other.count);
+}
+DoublyLinkedList& DoublyLinkedList::operator=(const DoublyLinkedList& other) {
+	DoublyLinkedList copy(other);
+	swap(copy);
+	return *this;
+}
 DoublyLinkedList::DoublyLinkedList(size_t value, size_t len_from, size_t len_to) {
 	head = new Node;
 	tail = new Node;
@@ -68,7 +113,19 @@ DoublyLinkedList::DoublyLinkedList(size_t value, size_t len_from, size_t len_to)
 		push_tail(generateRandomString(generateRandomNumber(len_from, len_to)));
 	}
 };
-void DoublyLinkedList::boom() {
+string DoublyLinkedList::operator[](size_t index) {
+	if (index > count-1)
+		throw std::invalid_argument("index is out of range");
+	int temp_size = 0;
+	Node* temp = head;
+	while (temp) {
+		if (temp_size == index)
+			return temp->_data;
+		temp = temp->_next;
+		temp_size++;
+	}
+}
+void DoublyLinkedList::del_list() {
 	while (head) {
 		tail = head->_next;
 		delete head;
@@ -76,7 +133,7 @@ void DoublyLinkedList::boom() {
 	}
 }
 DoublyLinkedList::~DoublyLinkedList() {
-	boom();
+	del_list();
 }
 void DoublyLinkedList::print() {
 	Node* temp = head;
@@ -85,6 +142,13 @@ void DoublyLinkedList::print() {
 		temp = temp->_next;
 	}
 }
-size_t  DoublyLinkedList::get_count() {
+void DoublyLinkedList::print_as_file() {
+	Node* temp = head;
+	while (temp) {
+		cout << temp->_data <<"/";
+		temp = temp->_next;
+	}
+}
+size_t  DoublyLinkedList::size() {
 	return count;
 }
