@@ -7,10 +7,9 @@
 #include <exception>
 
 using namespace std;
-
-namespace list {
 	string generateRandomString(int length);
 	int generateRandomNumber(int min, int max);
+namespace list {
 	struct Node {
 		Node* _prev;
 		string _data;

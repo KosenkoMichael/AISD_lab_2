@@ -46,4 +46,15 @@ TEST(test_1, test) {
 	catch(std::invalid_argument e) {
 		cout << e.what();
 	}*/
+	/*DoublyLinkedList b;
+	b.push_tail("1");
+	b.pop_head();
+	b.push_tail("2");
+	b.print();*/
+	/*DoublyLinkedList b;
+	b.push_tail("1");
+	b.push_tail("2");
+	b.push_tail("3");
+	b.delete_node("2");
+	b.print();*/
 }

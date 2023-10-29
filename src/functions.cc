@@ -3,7 +3,7 @@
 using namespace std;
 using namespace list;
 
-string list::generateRandomString(int length) {
+string generateRandomString(int length) {
 	random_device rd;
 	uniform_int_distribution<int> distribution(97, 122); // диапазон символов a-z
 	string randomString;
@@ -13,7 +13,7 @@ string list::generateRandomString(int length) {
 	return randomString;
 }
 
-int list::generateRandomNumber(int min, int max) {
+int generateRandomNumber(int min, int max) {
 	std::random_device rd;
 	std::mt19937 mt(rd());
 	std::uniform_int_distribution<int> distribution(min, max);
@@ -81,6 +81,70 @@ void DoublyLinkedList::push_head(const DoublyLinkedList& other) {
 	}
 	swap(copy);
 }
+void DoublyLinkedList::pop_tail() {
+	if (count != 0) {
+		if (count > 2) {
+			Node* temp = tail;
+			tail = tail->_prev;
+			tail->_next = nullptr;
+			delete temp;
+			count--;
+		}
+		else if (count == 2) {
+			tail->_data = "";
+			count--;
+		}
+		else if (count == 1) {
+			head->_data = "";
+			count--;
+		}
+	}
+}
+void DoublyLinkedList::pop_head() {
+	if (count != 0) {
+		if (count > 2) {
+			Node* temp = head;
+			head = head->_next;
+			head->_prev = nullptr;
+			delete temp;
+			count--;
+		}
+		else if (count == 2) {
+			head->_data = tail->_data;
+			tail->_data = "";
+			count--;
+		}
+		else if (count == 1) {
+			head->_data = "";
+			count--;
+		}
+	}
+}
+void DoublyLinkedList::delete_node(const string& data) {
+	Node* temp = head;
+	while (temp) {
+		if (temp->_data == data) {
+			if (temp->_prev == nullptr) {
+				temp = temp->_next;
+				pop_head();
+			}
+			else if (temp->_next == nullptr) {
+				temp = temp->_next;
+				pop_tail();
+			}
+			else {
+				temp = temp->_next;
+				Node* delete_node = temp->_prev;
+				(delete_node->_prev)->_next = delete_node->_next;
+				(delete_node->_next)->_prev = delete_node->_prev;
+				delete delete_node;
+				count--;
+			}
+		}
+		else
+			temp = temp->_next;
+	}
+}
 DoublyLinkedList::DoublyLinkedList(const DoublyLinkedList& other) {
 	head = new Node;
 	tail = new Node;
@@ -138,14 +202,16 @@ DoublyLinkedList::~DoublyLinkedList() {
 void DoublyLinkedList::print() {
 	Node* temp = head;
 	while (temp) {
-		cout << temp->_data<<endl;
+		if (temp->_data.size())
+			cout << temp->_data << endl;
 		temp = temp->_next;
 	}
 }
 void DoublyLinkedList::print_as_file() {
 	Node* temp = head;
 	while (temp) {
-		cout << temp->_data <<"/";
+		if (temp->_data.size())
+			cout << temp->_data << "/";
 		temp = temp->_next;
 	}
 }
