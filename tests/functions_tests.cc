@@ -58,8 +58,12 @@ TEST(test_1, test) {
 	b.delete_node("2");
 	b.print();*/
 	DoublyLinkedList b;
-	b.push_tail("first");
-	b.push_tail("seco::nd");
-	b.push_tail("third");
-	cout << b.remake_as_file();
+	b.push_tail("Users");
+	b.push_tail("79379");
+	b.push_tail("Desktop");
+	b.push_tail("aisd_lab_2");
+	string file_end = "please.txt";
+	cout << b.remake_as_file("C:\\")+file_end;
+	if (create_file(b.remake_as_file("C:\\") + file_end))
+		cout << "WIN";
 }

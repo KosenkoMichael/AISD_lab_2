@@ -21,6 +21,24 @@ int generateRandomNumber(int min, int max) {
 	return distribution(mt);
 }
 
+bool create_file(string str) {
+	// Создание объекта класса ofstream для записи в файл
+	std::ofstream file(str);
+
+	if (file.is_open()) {
+		// Файл успешно открыт
+		// Вы можете записать содержимое в файл, используя file << "содержимое";
+
+		// Закрыть файл после завершения операций над ним
+		file.close();
+
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 DoublyLinkedList::DoublyLinkedList() {
 	head = new Node;
 	tail = new Node;
@@ -207,7 +225,7 @@ void DoublyLinkedList::print() {
 		temp = temp->_next;
 	}
 }
-string DoublyLinkedList::remake_as_file() {
+string DoublyLinkedList::remake_as_file(string header_str) {
 	string str = "";
 	string valid_str = "";
 	Node* temp = head;
@@ -228,7 +246,7 @@ string DoublyLinkedList::remake_as_file() {
 			valid_str += c;
 		}
 	}
-	return valid_str;
+	return header_str + valid_str;
 }
 size_t  DoublyLinkedList::size() {
 	return count;
