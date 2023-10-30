@@ -5,6 +5,7 @@
 #include <iostream>
 #include <random>
 #include <exception>
+#include <filesystem>
 
 using namespace std;
 	string generateRandomString(int length);
@@ -37,7 +38,7 @@ namespace list {
 		void delete_node(const string& data);
 		string operator[](size_t index);
 		void print();
-		void print_as_file();
+		string remake_as_file();
 		size_t size();
 		void del_list();
 	};

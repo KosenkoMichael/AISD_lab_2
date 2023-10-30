@@ -57,4 +57,9 @@ TEST(test_1, test) {
 	b.push_tail("3");
 	b.delete_node("2");
 	b.print();*/
+	DoublyLinkedList b;
+	b.push_tail("first");
+	b.push_tail("seco::nd");
+	b.push_tail("third");
+	cout << b.remake_as_file();
 }

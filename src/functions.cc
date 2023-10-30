@@ -207,13 +207,28 @@ void DoublyLinkedList::print() {
 		temp = temp->_next;
 	}
 }
-void DoublyLinkedList::print_as_file() {
+string DoublyLinkedList::remake_as_file() {
+	string str = "";
+	string valid_str = "";
 	Node* temp = head;
 	while (temp) {
 		if (temp->_data.size())
-			cout << temp->_data << "/";
+			str += temp->_data + "\\";
 		temp = temp->_next;
 	}
+
+	// создаем список символов, которые нужно игнорировать
+	std::string ignoreChars = "!#+/*?:";
+
+	// перебираем символы в исходной строке
+	for (char c : str) {
+		// проверяем, является ли текущий символ игнорируемым
+		if (ignoreChars.find(c) == std::string::npos) {
+			// символ не является игнорируемым, добавляем его в новую строку
+			valid_str += c;
+		}
+	}
+	return valid_str;
 }
 size_t  DoublyLinkedList::size() {
 	return count;
