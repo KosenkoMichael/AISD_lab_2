@@ -10,8 +10,9 @@
 
 using namespace std;
 	bool create_file(string str);
-	string generateRandomString(int length);
-	int generateRandomNumber(int min, int max);
+	string generate_random_string(int length);
+	int generate_random_number(int min, int max);
+	void get_random_file_path(string header, string file_path);
 namespace list {
 	struct Node {
 		Node* _prev;
@@ -44,4 +45,8 @@ namespace list {
 		size_t size();
 		void del_list();
 	};
+	ostream& operator<<(ostream& stream, DoublyLinkedList list) {
+		list.print();
+		return stream;
+	}
 }

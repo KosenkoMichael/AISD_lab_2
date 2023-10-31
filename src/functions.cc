@@ -3,7 +3,7 @@
 using namespace std;
 using namespace list;
 
-string generateRandomString(int length) {
+string generate_random_string(int length) {
 	random_device rd;
 	uniform_int_distribution<int> distribution(97, 122); // диапазон символов a-z
 	string randomString;
@@ -13,30 +13,31 @@ string generateRandomString(int length) {
 	return randomString;
 }
 
-int generateRandomNumber(int min, int max) {
-	std::random_device rd;
-	std::mt19937 mt(rd());
-	std::uniform_int_distribution<int> distribution(min, max);
-
+int generate_random_number(int min, int max) {
+	random_device rd;
+	mt19937 mt(rd());
+	uniform_int_distribution<int> distribution(min, max);
 	return distribution(mt);
 }
 
 bool create_file(string str) {
-	// Создание объекта класса ofstream для записи в файл
-	std::ofstream file(str);
-
+	ofstream file(str);
 	if (file.is_open()) {
-		// Файл успешно открыт
-		// Вы можете записать содержимое в файл, используя file << "содержимое";
-
-		// Закрыть файл после завершения операций над ним
 		file.close();
-
 		return true;
 	}
 	else {
 		return false;
 	}
+}
+
+void get_random_file_path(string header, string file_path) {
+	int count = generate_random_number(1, 10);
+	DoublyLinkedList list;
+	for (int i = 0; i < count; i++) {
+		list.push_tail(generate_random_string(generate_random_number(1, 10)));
+	}
+	cout << list.remake_as_file(header) + file_path;
 }
 
 DoublyLinkedList::DoublyLinkedList() {
@@ -192,12 +193,12 @@ DoublyLinkedList::DoublyLinkedList(size_t value, size_t len_from, size_t len_to)
 	tail->_prev = head;
 	count = 0;
 	for (int i = 0; i < value; i++) {
-		push_tail(generateRandomString(generateRandomNumber(len_from, len_to)));
+		push_tail(generate_random_string(generate_random_number(len_from, len_to)));
 	}
 };
 string DoublyLinkedList::operator[](size_t index) {
 	if (index > count-1)
-		throw std::invalid_argument("index is out of range");
+		throw invalid_argument("index is out of range");
 	int temp_size = 0;
 	Node* temp = head;
 	while (temp) {
@@ -236,12 +237,12 @@ string DoublyLinkedList::remake_as_file(string header_str) {
 	}
 
 	// создаем список символов, которые нужно игнорировать
-	std::string ignoreChars = "!#+/*?:";
+	string ignoreChars = "!#+/*?:";
 
 	// перебираем символы в исходной строке
 	for (char c : str) {
 		// проверяем, является ли текущий символ игнорируемым
-		if (ignoreChars.find(c) == std::string::npos) {
+		if (ignoreChars.find(c) == string::npos) {
 			// символ не является игнорируемым, добавляем его в новую строку
 			valid_str += c;
 		}
