@@ -37,7 +37,7 @@ void get_random_file_path(string header, string file_path) {
 	for (int i = 0; i < count; i++) {
 		list.push_tail(generate_random_string(generate_random_number(1, 10)));
 	}
-	cout << list.remake_as_file(header) + file_path;
+	cout << list.remake_as_file(header, file_path);
 }
 
 DoublyLinkedList::DoublyLinkedList() {
@@ -196,7 +196,7 @@ DoublyLinkedList::DoublyLinkedList(size_t value, size_t len_from, size_t len_to)
 		push_tail(generate_random_string(generate_random_number(len_from, len_to)));
 	}
 };
-string DoublyLinkedList::operator[](size_t index) {
+string& DoublyLinkedList::operator[](size_t index) {
 	if (index > count-1)
 		throw invalid_argument("index is out of range");
 	int temp_size = 0;
@@ -221,18 +221,16 @@ DoublyLinkedList::~DoublyLinkedList() {
 void DoublyLinkedList::print() {
 	Node* temp = head;
 	while (temp) {
-		if (temp->_data.size())
-			cout << temp->_data << endl;
+		cout << temp->_data << endl;
 		temp = temp->_next;
 	}
 }
-string DoublyLinkedList::remake_as_file(string header_str) {
+string DoublyLinkedList::remake_as_file(string header_str, string footer_str) {
 	string str = "";
 	string valid_str = "";
 	Node* temp = head;
 	while (temp) {
-		if (temp->_data.size())
-			str += temp->_data + "\\";
+		str += temp->_data + "\\";
 		temp = temp->_next;
 	}
 
@@ -247,7 +245,7 @@ string DoublyLinkedList::remake_as_file(string header_str) {
 			valid_str += c;
 		}
 	}
-	return header_str + valid_str;
+	return header_str + valid_str + footer_str;
 }
 size_t  DoublyLinkedList::size() {
 	return count;

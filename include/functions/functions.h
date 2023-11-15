@@ -25,6 +25,7 @@ namespace list {
 		Node* head;
 		Node* tail;
 		size_t count;
+		void del_list();
 	public:
 		DoublyLinkedList();
 		DoublyLinkedList(size_t value, size_t len_from, size_t len_to);
@@ -39,11 +40,10 @@ namespace list {
 		void pop_head();
 		void pop_tail();
 		void delete_node(const string& data);
-		string operator[](size_t index);
+		string& operator[](size_t index);
 		void print();
-		string remake_as_file(string header_str);
+		string remake_as_file(string header_str, string footer_str);
 		size_t size();
-		void del_list();
 	};
 	ostream& operator<<(ostream& stream, DoublyLinkedList list) {
 		list.print();
