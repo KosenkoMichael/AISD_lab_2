@@ -33,21 +33,22 @@ bool create_file(string str) {
 
 void get_random_file_path(string header, string file_path) {
 	int count = generate_random_number(1, 10);
-	DoublyLinkedList list;
+	DoublyLinkedList<string> list;
 	for (int i = 0; i < count; i++) {
 		list.push_tail(generate_random_string(generate_random_number(1, 10)));
 	}
 	cout << list.remake_as_file(header, file_path);
 }
-
-DoublyLinkedList::DoublyLinkedList() {
-	head = new Node;
-	tail = new Node;
+template<typename T>
+DoublyLinkedList<T>::DoublyLinkedList() {
+	head = new Node<T>;
+	tail = new Node<T>;
 	head->_next = tail;
 	tail->_prev = head;
 	count = 0;
 }
-void DoublyLinkedList::push_tail(const string& data) {
+template<typename T>
+void DoublyLinkedList<T>::push_tail(const string& data) {
 	if (count == 0) {
 		head->_data = data;
 		count++;
@@ -57,7 +58,7 @@ void DoublyLinkedList::push_tail(const string& data) {
 		count++;
 	}
 	else if (count > 1) {
-		Node* temp = new Node;
+		Node<T>* temp = new Node<T>;
 		temp->_data = data;
 		tail->_next = temp;
 		temp->_prev = tail;
@@ -65,14 +66,16 @@ void DoublyLinkedList::push_tail(const string& data) {
 		count++;
 	}
 }
-void DoublyLinkedList::push_tail(const DoublyLinkedList& other) {
-		Node* temp = other.head;
+template<typename T>
+void DoublyLinkedList<T>::push_tail(const DoublyLinkedList& other) {
+		Node<T>* temp = other.head;
 		while (temp) {
 			push_tail(temp->_data);
 			temp = temp->_next;
 		}
 }
-void DoublyLinkedList::push_head(const string& data) {
+template<typename T>
+void DoublyLinkedList<T>::push_head(const string& data) {
 	if (count == 0) {
 		head->_data = data;
 		count++;
@@ -83,7 +86,7 @@ void DoublyLinkedList::push_head(const string& data) {
 		count++;
 	}
 	else if (count > 1) {
-		Node* temp = new Node;
+		Node<T>* temp = new Node<T>;
 		temp->_data = data;
 		temp->_next = head;
 		head->_prev = temp;
@@ -91,19 +94,21 @@ void DoublyLinkedList::push_head(const string& data) {
 		count++;
 	}
 }
-void DoublyLinkedList::push_head(const DoublyLinkedList& other) {
-	DoublyLinkedList copy(other);
-	Node* temp = head;
+template<typename T>
+void DoublyLinkedList<T>::push_head(const DoublyLinkedList& other) {
+	DoublyLinkedList<T> copy(other);
+	Node<T>* temp = head;
 	while (temp) {
 		copy.push_tail(temp->_data);
 		temp = temp->_next;
 	}
 	swap(copy);
 }
-void DoublyLinkedList::pop_tail() {
+template<typename T>
+void DoublyLinkedList<T>::pop_tail() {
 	if (count != 0) {
 		if (count > 2) {
-			Node* temp = tail;
+			Node<T>* temp = tail;
 			tail = tail->_prev;
 			tail->_next = nullptr;
 			delete temp;
@@ -119,10 +124,11 @@ void DoublyLinkedList::pop_tail() {
 		}
 	}
 }
-void DoublyLinkedList::pop_head() {
+template<typename T>
+void DoublyLinkedList<T>::pop_head() {
 	if (count != 0) {
 		if (count > 2) {
-			Node* temp = head;
+			Node<T>* temp = head;
 			head = head->_next;
 			head->_prev = nullptr;
 			delete temp;
@@ -139,7 +145,8 @@ void DoublyLinkedList::pop_head() {
 		}
 	}
 }
-void DoublyLinkedList::delete_node(const string& data) {
+template<typename T>
+void DoublyLinkedList<T>::delete_node(const string& data) {
 	Node* temp = head;
 	while (temp) {
 		if (temp->_data == data) {
@@ -153,7 +160,7 @@ void DoublyLinkedList::delete_node(const string& data) {
 			}
 			else {
 				temp = temp->_next;
-				Node* delete_node = temp->_prev;
+				Node<T>* delete_node = temp->_prev;
 				(delete_node->_prev)->_next = delete_node->_next;
 				(delete_node->_next)->_prev = delete_node->_prev;
 				delete delete_node;
@@ -164,31 +171,35 @@ void DoublyLinkedList::delete_node(const string& data) {
 			temp = temp->_next;
 	}
 }
-DoublyLinkedList::DoublyLinkedList(const DoublyLinkedList& other) {
-	head = new Node;
-	tail = new Node;
+template<typename T>
+DoublyLinkedList<T>::DoublyLinkedList(const DoublyLinkedList<T>& other) {
+	head = new Node<T>;
+	tail = new Node<T>;
 	head->_next = tail;
 	tail->_prev = head;
 	count = 0;
-	Node* temp = other.head;
+	Node<T>* temp = other.head;
 	while (temp) {
 		push_tail(temp->_data);
 		temp = temp->_next;
 	}
 }
-void DoublyLinkedList::swap(DoublyLinkedList& other) {
+template<typename T>
+void DoublyLinkedList<T>::swap(DoublyLinkedList& other) {
 	std::swap(head, other.head);
 	std::swap(tail, other.tail);
 	std::swap(count, other.count);
 }
-DoublyLinkedList& DoublyLinkedList::operator=(const DoublyLinkedList& other) {
+template<typename T>
+DoublyLinkedList<T>& DoublyLinkedList<T>::operator=(const DoublyLinkedList& other) {
 	DoublyLinkedList copy(other);
 	swap(copy);
 	return *this;
 }
-DoublyLinkedList::DoublyLinkedList(size_t value, size_t len_from, size_t len_to) {
-	head = new Node;
-	tail = new Node;
+template<typename T>
+DoublyLinkedList<T>::DoublyLinkedList(size_t value, size_t len_from, size_t len_to) {
+	head = new Node<T>;
+	tail = new Node<T>;
 	head->_next = tail;
 	tail->_prev = head;
 	count = 0;
@@ -196,11 +207,12 @@ DoublyLinkedList::DoublyLinkedList(size_t value, size_t len_from, size_t len_to)
 		push_tail(generate_random_string(generate_random_number(len_from, len_to)));
 	}
 };
-string& DoublyLinkedList::operator[](size_t index) {
+template<typename T>
+string& DoublyLinkedList<T>::operator[](size_t index) {
 	if (index > count-1)
 		throw invalid_argument("index is out of range");
 	int temp_size = 0;
-	Node* temp = head;
+	Node<T>* temp = head;
 	while (temp) {
 		if (temp_size == index)
 			return temp->_data;
@@ -208,27 +220,31 @@ string& DoublyLinkedList::operator[](size_t index) {
 		temp_size++;
 	}
 }
-void DoublyLinkedList::del_list() {
+template<typename T>
+void DoublyLinkedList<T>::del_list() {
 	while (head) {
 		tail = head->_next;
 		delete head;
 		head = tail;
 	}
 }
-DoublyLinkedList::~DoublyLinkedList() {
+template<typename T>
+DoublyLinkedList<T>::~DoublyLinkedList() {
 	del_list();
 }
-void DoublyLinkedList::print() {
-	Node* temp = head;
+template<typename T>
+void DoublyLinkedList<T>::print() {
+	Node<T>* temp = head;
 	while (temp) {
 		cout << temp->_data << endl;
 		temp = temp->_next;
 	}
 }
-string DoublyLinkedList::remake_as_file(string header_str, string footer_str) {
+template<typename T>
+string DoublyLinkedList<T>::remake_as_file(string header_str, string footer_str) {
 	string str = "";
 	string valid_str = "";
-	Node* temp = head;
+	Node<T>* temp = head;
 	while (temp) {
 		str += temp->_data + "\\";
 		temp = temp->_next;
@@ -247,6 +263,7 @@ string DoublyLinkedList::remake_as_file(string header_str, string footer_str) {
 	}
 	return header_str + valid_str + footer_str;
 }
-size_t  DoublyLinkedList::size() {
+template<typename T>
+size_t  DoublyLinkedList<T>::size() {
 	return count;
 }

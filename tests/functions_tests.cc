@@ -31,13 +31,13 @@ using namespace list;
 //}
 
 TEST(test_2, test) {
-	DoublyLinkedList b;
+	DoublyLinkedList<string> b;
 	b.push_tail("Us!??++ers");
 	b.push_tail("Aspire 7");
 	b.push_tail("Desktop");
 	b.push_tail("AISD_lab_2");
 	string file_end = "CUR_FILE.txt";
 	cout << b.remake_as_file("C:\\", file_end)<<endl;
-	//create_file(b.remake_as_file("C:\\",file_end));
+	create_file(b.remake_as_file("C:\\",file_end));
 	get_random_file_path("D:\\", "file.txt");
 }
